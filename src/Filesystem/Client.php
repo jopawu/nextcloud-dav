@@ -4,7 +4,8 @@
 
 namespace iit\Nextcloud\DAV\Filesystem;
 
-use iit\Nextcloud\DAV\Server;
+use iit\Nextcloud\DAV\Server as NcServer;
+use Sabre\DAV\Client as DavClient;
 
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
@@ -12,14 +13,14 @@ use iit\Nextcloud\DAV\Server;
 class Client
 {
     /**
-     * @var Server
+     * @var NcServer
      */
     protected $server;
 
     /**
-     * @param Server $server
+     * @param NcServer $server
      */
-    public function __construct(Server $server)
+    public function __construct(NcServer $server)
     {
         $this->server = $server;
     }
@@ -30,6 +31,8 @@ class Client
      */
     public function listDirectory($path = '')
     {
-        return 'hello world';
+        $davClient = $this->server->getDavClient();
+
+        return $davClient->options();
     }
 }

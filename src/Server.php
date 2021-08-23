@@ -4,6 +4,8 @@
 
 namespace iit\Nextcloud\DAV;
 
+use Sabre\DAV\Client as DavClient;
+
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
  */
@@ -39,7 +41,7 @@ class Server
     /**
      * @return string
      */
-    public function getBaseUri()
+    protected function getBaseUri()
     {
         return $this->baseUri;
     }
@@ -47,7 +49,7 @@ class Server
     /**
      * @return string
      */
-    public function getUserName()
+    protected function getUserName()
     {
         return $this->userName;
     }
@@ -55,8 +57,20 @@ class Server
     /**
      * @return string
      */
-    public function getUserPass()
+    protected function getUserPass()
     {
         return $this->userPass;
+    }
+
+    /**
+     * @return DavClient
+     */
+    public function getDavClient()
+    {
+        return new DavClient([
+            'baseUri' => $this->getBaseUri(),
+            'userName' => $this->getUserName(),
+            'password' => $this->getUserPass()
+        ]);
     }
 }
