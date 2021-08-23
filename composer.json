@@ -17,6 +17,6 @@
         "sort-packages": true
     },
     "autoload": {
-        "psr-4": { "iit\\NC\\DAV\\": "src" }
+        "psr-4": { "iit\\Nextcloud\\DAV\\": "src" }
     }
 }
