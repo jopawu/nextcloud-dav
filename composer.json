@@ -1,0 +1,21 @@
+{
+    "name": "jopawu/nextcloud-dav",
+    "type": "library",
+    "description": "Nextcloud DAV Adapter",
+    "keywords": ["php", "davs", "nextcloud"],
+    "homepage": "http://www.iit-online.de",
+    "license": "MIT",
+    "authors": [
+        {"name": "Björn Heyser", "email": "info@bjoernheyser.de"},
+        {"name": "Johannes Papst", "email": "info@iit-online.de"}
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": { "iit\\NC\\DAV\\": "src" }
+    }
+}
