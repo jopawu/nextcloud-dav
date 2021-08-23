@@ -23,4 +23,13 @@ class Client
     {
         $this->server = $server;
     }
+
+    /**
+     * @param string $path
+     * @return mixed
+     */
+    public function listDirectory($path = '')
+    {
+        return 'hello world';
+    }
 }

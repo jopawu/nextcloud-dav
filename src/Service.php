@@ -20,10 +20,10 @@ class Service
     }
 
     /**
-     * @return FS\Client
+     * @return Filesystem\Client
      */
     public function filesystem()
     {
-        return new FS\Client($this->server);
+        return new Filesystem\Client($this->server);
     }
 }
