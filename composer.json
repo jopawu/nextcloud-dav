@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "sabre/dav": "4.1.4"
+        "sabre/dav": ">=4.1.5"
     },
     "config": {
         "sort-packages": true
