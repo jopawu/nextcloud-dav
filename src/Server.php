@@ -5,26 +5,34 @@
 namespace iit\Nextcloud\DAV;
 
 use Sabre\DAV\Client as DavClient;
+use iit\Nextcloud\DAV\Filesystem\Path;
 
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
  */
 class Server
 {
-    /**
-     * @var string
-     */
-    protected $baseUri = null;
+    const FILESYSTEM_BASE_PATH_FORMAT_PATTERN = 'files/%s';
 
     /**
      * @var string
      */
-    protected $userName = null;
+    protected $baseUri;
 
     /**
      * @var string
      */
-    protected $userPass = null;
+    protected $userName;
+
+    /**
+     * @var string
+     */
+    protected $userPass;
+
+    /**
+     * @var string
+     */
+    protected $filesystemBasePath;
 
     /**
      * @param string $baseUri
@@ -36,6 +44,10 @@ class Server
         $this->baseUri = $baseUri;
         $this->userName = $userName;
         $this->userPass = $userPass;
+
+        $this->filesystemBasePath = sprintf(
+            self::FILESYSTEM_BASE_PATH_FORMAT_PATTERN, $this->getUserName()
+        );
     }
 
     /**
@@ -63,6 +75,14 @@ class Server
     }
 
     /**
+     * @return string
+     */
+    protected function getFilesystemBasePath()
+    {
+        return $this->filesystemBasePath;
+    }
+
+    /**
      * @return DavClient
      */
     public function getDavClient()
@@ -72,5 +92,21 @@ class Server
             'userName' => $this->getUserName(),
             'password' => $this->getUserPass()
         ]);
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    public function buildFilesystemPath($path)
+    {
+        $path = Path::trimSlashes($path);
+
+        if( !strlen($path) )
+        {
+            return $this->getFilesystemBasePath();
+        }
+
+        return $this->getFilesystemBasePath() . '/' . $path;
     }
 }
