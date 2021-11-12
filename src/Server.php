@@ -12,8 +12,6 @@ use iit\Nextcloud\DAV\Filesystem\Path;
  */
 class Server
 {
-    const FILESYSTEM_BASE_PATH_FORMAT_PATTERN = 'files/%s';
-
     /**
      * @var string
      */
@@ -30,11 +28,6 @@ class Server
     protected $userPass;
 
     /**
-     * @var string
-     */
-    protected $filesystemBasePath;
-
-    /**
      * @param string $baseUri
      * @param string $userName
      * @param string $userPass
@@ -44,16 +37,12 @@ class Server
         $this->baseUri = $baseUri;
         $this->userName = $userName;
         $this->userPass = $userPass;
-
-        $this->filesystemBasePath = sprintf(
-            self::FILESYSTEM_BASE_PATH_FORMAT_PATTERN, $this->getUserName()
-        );
     }
 
     /**
      * @return string
      */
-    protected function getBaseUri()
+    public function getBaseUri()
     {
         return $this->baseUri;
     }
@@ -61,7 +50,7 @@ class Server
     /**
      * @return string
      */
-    protected function getUserName()
+    public function getUserName()
     {
         return $this->userName;
     }
@@ -69,17 +58,9 @@ class Server
     /**
      * @return string
      */
-    protected function getUserPass()
+    public function getUserPass()
     {
         return $this->userPass;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getFilesystemBasePath()
-    {
-        return $this->filesystemBasePath;
     }
 
     /**
@@ -92,21 +73,5 @@ class Server
             'userName' => $this->getUserName(),
             'password' => $this->getUserPass()
         ]);
-    }
-
-    /**
-     * @param string $path
-     * @return string
-     */
-    public function buildFilesystemPath($path)
-    {
-        $path = Path::trimSlashes($path);
-
-        if( !strlen($path) )
-        {
-            return $this->getFilesystemBasePath();
-        }
-
-        return $this->getFilesystemBasePath() . '/' . $path;
     }
 }

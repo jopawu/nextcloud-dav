@@ -30,13 +30,13 @@ class Client
      */
     public function listDirectory($path)
     {
-        $davClient = $this->server->getDavClient();
+        $path = new Path($this->server, $path);
 
-        $path = $this->server->buildFilesystemPath($path);
+        $davClient = $this->server->getDavClient();
 
         #return $davClient->request('GET');
 
-        return $davClient->propFind($path, array(
+        return $davClient->propFind((string)$path, array(
             '{DAV:}resourcetype',
             //'{DAV:}permissions',
             '{DAV:}getlastmodified',
