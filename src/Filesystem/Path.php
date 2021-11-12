@@ -11,7 +11,7 @@ use iit\Nextcloud\DAV\Server;
  */
 class Path
 {
-    const FILESYSTEM_BASE_PATH_FORMAT_PATTERN = 'files/%s';
+    const FILESYSTEM_BASE_PATH_FORMAT_PATTERN = '%s/files/%s';
 
     /**
      * @var string
@@ -49,7 +49,7 @@ class Path
     protected function buildFilesystemBasePath(Server $server) : string
     {
         return sprintf(
-            self::FILESYSTEM_BASE_PATH_FORMAT_PATTERN, $server->getUserName()
+            self::FILESYSTEM_BASE_PATH_FORMAT_PATTERN, $server->getBaseUri(), $server->getUserName()
         );
     }
 

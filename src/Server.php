@@ -34,9 +34,18 @@ class Server
      */
     public function __construct($baseUri, $userName, $userPass)
     {
-        $this->baseUri = $baseUri;
+        $this->baseUri = $this->trimTrailingSlashes($baseUri);
         $this->userName = $userName;
         $this->userPass = $userPass;
+    }
+
+    /**
+     * @param string $uri
+     * @return string
+     */
+    protected function trimTrailingSlashes(string $uri) : string
+    {
+        return rtrim($uri, '/');
     }
 
     /**
