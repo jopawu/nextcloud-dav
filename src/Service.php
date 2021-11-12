@@ -10,13 +10,25 @@ namespace iit\Nextcloud\DAV;
 class Service
 {
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * @var Server
      */
     protected $server;
 
-    public function __construct($BASE_URI, $USER_NAME, $USER_PASS)
+    /**
+     * @param Config $config
+     */
+    public function __construct(Config $config)
     {
-        $this->server = new Server($BASE_URI, $USER_NAME, $USER_PASS);
+        $this->config = $config;
+
+        $this->server = new Server(
+            $config->getBaseUri(), $config->getUsername(), $config->getPassword()
+        );
     }
 
     /**
