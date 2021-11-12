@@ -34,8 +34,6 @@ class Client
 
         $path = $this->server->buildFilesystemPath($path);
 
-        #return $davClient->request('GET');
-
         return $davClient->propFind($path, array(
             '{DAV:}resourcetype',
             //'{DAV:}permissions',
@@ -44,5 +42,14 @@ class Client
             '{DAV:}getcontentlength',
             '{DAV:}getetag'
         ), 1);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get()
+    {
+        $davClient = $this->server->getDavClient();
+        return $davClient->request('GET');
     }
 }
