@@ -5,18 +5,19 @@
 namespace iit\Nextcloud\DAV\Filesystem;
 
 use iit\Nextcloud\DAV\Server;
+use iit\Nextcloud\DAV\Helpers\PathString;
 
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
  */
 class Path
 {
-    const FILESYSTEM_BASE_PATH_FORMAT_PATTERN = '%s/files/%s';
+    use PathString;
 
     /**
-     * @var string
+     * @var Server
      */
-    protected $filesystemBasePath;
+    protected $server;
 
     /**
      * @var string
@@ -29,41 +30,39 @@ class Path
      */
     public function __construct(Server $server, $path)
     {
+        $this->server = $server;
         $this->path = $this->trimSlashes($path);
-        $this->filesystemBasePath = $this->buildFilesystemBasePath($server);
-    }
-
-    /**
-     * @param string $path
-     * @return string
-     */
-    protected function trimSlashes($path) : string
-    {
-        return trim($path ,'/');
-    }
-
-    /**
-     * @param Server $server
-     * @return string
-     */
-    protected function buildFilesystemBasePath(Server $server) : string
-    {
-        return sprintf(
-            self::FILESYSTEM_BASE_PATH_FORMAT_PATTERN, $server->getBaseUri(), $server->getUserName()
-        );
     }
 
     /**
      * @return string
      */
-    public function getFilesystemPath() : string
+    protected function buildRelativeFilesystemBasePath() : string
     {
-        if( !strlen($this->path) )
+        return 'files/'.$this->server->getUserName();
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildAbsoluteFilesystemBaseFqdn() : string
+    {
+        return $this->server->getBaseUri().'/'.$this->buildRelativeFilesystemBasePath();
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbsoluteFqdn() : string
+    {
+        $absoluteFilesystemBaseFqdn = $this->buildAbsoluteFilesystemBaseFqdn();
+
+        if( strlen($this->path) )
         {
-            return $this->filesystemBasePath;
+            return $absoluteFilesystemBaseFqdn . '/' . $this->path;
         }
 
-        return $this->filesystemBasePath . '/' . $this->path;
+        return $absoluteFilesystemBaseFqdn;
     }
 
     /**
@@ -71,7 +70,6 @@ class Path
      */
     public function __toString() : string
     {
-        return $this->getFilesystemPath();
+        return $this->getAbsoluteFqdn();
     }
-
 }

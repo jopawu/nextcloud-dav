@@ -5,6 +5,10 @@
 namespace iit\Nextcloud\DAV\Filesystem;
 
 use iit\Nextcloud\DAV\Server as NcServer;
+use iit\Nextcloud\DAV\Filesystem\Query\ListDirectoryRequest;
+use iit\Nextcloud\DAV\Filesystem\Query\QuotaReportRequest;
+use iit\Nextcloud\DAV\Filesystem\DTO\Directory;
+use iit\Nextcloud\DAV\Filesystem\DTO\Quota;
 
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
@@ -25,23 +29,12 @@ class Client
     }
 
     /**
-     * @param string $path
      * @return mixed
      */
-    public function listDirectory($path)
+    public function options()
     {
-        $path = new Path($this->server, $path);
-
         $davClient = $this->server->getDavClient();
-
-        return $davClient->propFind((string)$path, array(
-            '{DAV:}resourcetype',
-            //'{DAV:}permissions',
-            '{DAV:}getlastmodified',
-            '{DAV:}getcontenttype',
-            '{DAV:}getcontentlength',
-            '{DAV:}getetag'
-        ), 1);
+        return $davClient->options();
     }
 
     /**
@@ -51,5 +44,27 @@ class Client
     {
         $davClient = $this->server->getDavClient();
         return $davClient->request('GET');
+    }
+
+    /**
+     * @return Quota
+     */
+    public function quotaReport() : Quota
+    {
+        $request = new QuotaReportRequest($this->server);
+        $response = $request->perform();
+        return $response->parse();
+    }
+
+    /**
+     * @param string $path
+     * @return Directory
+     */
+    public function listDirectory(string $path) : Directory
+    {
+        $path = new Path($this->server, $path);
+        $request = new ListDirectoryRequest($this->server, $path);
+        $response = $request->perform();
+        return $response->parse();
     }
 }

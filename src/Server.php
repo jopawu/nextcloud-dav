@@ -6,12 +6,15 @@ namespace iit\Nextcloud\DAV;
 
 use Sabre\DAV\Client as DavClient;
 use iit\Nextcloud\DAV\Filesystem\Path;
+use iit\Nextcloud\DAV\Helpers\PathString;
 
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
  */
 class Server
 {
+    use PathString;
+
     /**
      * @var string
      */
@@ -37,15 +40,6 @@ class Server
         $this->baseUri = $this->trimTrailingSlashes($baseUri);
         $this->userName = $userName;
         $this->userPass = $userPass;
-    }
-
-    /**
-     * @param string $uri
-     * @return string
-     */
-    protected function trimTrailingSlashes(string $uri) : string
-    {
-        return rtrim($uri, '/');
     }
 
     /**
