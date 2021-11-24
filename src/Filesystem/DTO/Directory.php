@@ -27,6 +27,22 @@ class Directory extends Item implements Iterator
     }
 
     /**
+     * @return bool
+     */
+    public function isDirectory() : bool
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFile() : bool
+    {
+        return false;
+    }
+
+    /**
      * @param Item $child
      */
     public function addChild(Item $child)

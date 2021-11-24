@@ -57,4 +57,14 @@ abstract class Item
     {
         return $this->lastModified;
     }
+
+    /**
+     * @return bool
+     */
+    abstract public function isDirectory() : bool;
+
+    /**
+     * @return bool
+     */
+    abstract public function isFile() : bool;
 }

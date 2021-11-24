@@ -46,4 +46,20 @@ class File extends Item
     {
         return $this->size;
     }
+
+    /**
+     * @return bool
+     */
+    public function isDirectory() : bool
+    {
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFile() : bool
+    {
+        return true;
+    }
 }
