@@ -49,15 +49,8 @@ class ListDirectoryResponse extends QueryResponse
         $rootIndex = array_shift(array_keys($davResponse));
         $rootItem = array_shift($davResponse);
         $rootIndex = $this->path->fetchRelativeDavRessourcePath($rootIndex);
-    }
 
-    /**
-     * @param string $rootIndex
-     * @param array  $rootItem
-     */
-    protected function validateRootItem(string $rootIndex, array $rootItem)
-    {
-
+        // todo: validate response
     }
 
     /**
