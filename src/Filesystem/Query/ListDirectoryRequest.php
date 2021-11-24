@@ -22,18 +22,26 @@ class ListDirectoryRequest extends QueryRequest
     protected $path;
 
     /**
-     * @param Server $server
+     * @var int
      */
-    public function __construct(Server $server, Path $path)
+    protected $depth;
+
+    /**
+     * @param Server   $server
+     * @param Path     $path
+     * @param int|null $depth
+     */
+    public function __construct(Server $server, Path $path, int $depth = null)
     {
         $this->server = $server;
         $this->path = $path;
+        $this->depth = $depth;
     }
 
     public function perform() : QueryResponse
     {
         $davClient = $this->server->getDavClient();
-        $davResponse = $davClient->propFind((string)$this->path, DavProperties::getItemProperties(), 1);
+        $davResponse = $davClient->propFind((string)$this->path, DavProperties::getItemProperties(), $this->depth);
         return new ListDirectoryResponse($this->server, $this->path, $davResponse);
     }
 

@@ -57,13 +57,14 @@ class Client
     }
 
     /**
-     * @param string $path
+     * @param string   $path
+     * @param int|null $depth
      * @return Directory
      */
-    public function listDirectory(string $path) : Directory
+    public function listDirectory(string $path, int $depth = PHP_INT_MAX) : Directory
     {
         $path = new Path($this->server, $path);
-        $request = new ListDirectoryRequest($this->server, $path);
+        $request = new ListDirectoryRequest($this->server, $path, $depth);
         $response = $request->perform();
         return $response->parse();
     }
