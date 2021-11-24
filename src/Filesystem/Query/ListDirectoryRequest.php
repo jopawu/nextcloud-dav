@@ -34,7 +34,7 @@ class ListDirectoryRequest extends QueryRequest
     {
         $davClient = $this->server->getDavClient();
         $davResponse = $davClient->propFind((string)$this->path, DavProperties::getItemProperties(), 1);
-        return new ListDirectoryResponse($davResponse);
+        return new ListDirectoryResponse($this->server, $this->path, $davResponse);
     }
 
 }

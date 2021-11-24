@@ -6,6 +6,7 @@ namespace iit\Nextcloud\DAV\Filesystem;
 
 use iit\Nextcloud\DAV\Server;
 use iit\Nextcloud\DAV\Helpers\PathString;
+use iit\Nextcloud\DAV\Helpers\UrlString;
 
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
@@ -13,6 +14,7 @@ use iit\Nextcloud\DAV\Helpers\PathString;
 class Path
 {
     use PathString;
+    use UrlString;
 
     /**
      * @var Server
@@ -32,6 +34,14 @@ class Path
     {
         $this->server = $server;
         $this->path = $this->trimSlashes($path);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath() : string
+    {
+        return $this->path;
     }
 
     /**
@@ -63,6 +73,19 @@ class Path
         }
 
         return $absoluteFilesystemBaseFqdn;
+    }
+
+    /**
+     * @param string $absoluteDavFilesystemPath
+     * @return string
+     */
+    public function fetchRelativeDavRessourcePath(string $absoluteDavRessourcePath) : string
+    {
+        $absoluteFilesystemBaseFqdn = $this->buildAbsoluteFilesystemBaseFqdn();
+        $relativeDavFilesystemBasePath = $this->fetchUrlsRelativeRessourcePath($absoluteFilesystemBaseFqdn);
+        $relativeDavFilesystemPath = str_replace($relativeDavFilesystemBasePath, '', $absoluteDavRessourcePath);
+        $relativeDavFilesystemPath = $this->trimTrailingSlashes($relativeDavFilesystemPath);
+        return $relativeDavFilesystemPath;
     }
 
     /**

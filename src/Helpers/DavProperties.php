@@ -4,11 +4,11 @@ namespace iit\Nextcloud\DAV\Helpers;
 
 class DavProperties
 {
-    const PROP_IDENTIFIER = 'identifier';
-    const PROP_RESSOUCETYPE = 'ressourcetype';
-    const PROP_LASTMODIFIED = 'lastmodified';
-    const PROP_CONTENTTYPE = 'contenttype';
-    const PROP_CONTENTSIZE = 'contentsize';
+    const PROP_IDENTIFIER = '{DAV:}getetag';
+    const PROP_RESSOUCETYPE = '{DAV:}resourcetype';
+    const PROP_LASTMODIFIED = '{DAV:}getlastmodified';
+    const PROP_CONTENTTYPE = '{DAV:}getcontenttype';
+    const PROP_CONTENTSIZE = '{DAV:}getcontentlength';
 
     const PROP_USED_QUOTA = '{DAV:}quota-used-bytes';
     const PROP_AVAILABLE_QUOTA = '{DAV:}quota-available-bytes';
@@ -16,7 +16,7 @@ class DavProperties
     /**
      * @var string[]
      */
-    protected $propsNotWorking = [
+    protected static $propsNotWorking = [
         '{DAV:}displayname', '{DAV:}permissions', '{http://owncloud.org/ns}permissions',
     ];
 

@@ -8,14 +8,42 @@ namespace iit\Nextcloud\DAV\Filesystem\DTO;
 class File extends Item
 {
     /**
-     * @var
+     * @var string
      */
-    protected $nextcloudIdentifier;
+    protected $mimeType;
 
     /**
-     * @var
+     * @var int
      */
-    protected $lastModified;
+    protected $size;
 
+    /**
+     * @param string $identifier
+     * @param string $name
+     * @param int $lastModified
+     * @param string $mimeType
+     * @param int $size
+     */
+    public function __construct(string $identifier, string $name, int $lastModified, string $mimeType, int $size)
+    {
+        parent::__construct($identifier, $name, $lastModified);
+        $this->mimeType = $mimeType;
+        $this->size = $size;
+    }
 
+    /**
+     * @return string
+     */
+    public function getMimeType() : string
+    {
+        return $this->mimeType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSize() : int
+    {
+        return $this->size;
+    }
 }
