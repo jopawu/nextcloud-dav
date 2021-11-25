@@ -71,15 +71,45 @@ class Client
         return $response->parse();
     }
 
+    public function createDirectoryWIP() : void
+    {
+
+    }
+
+    public function deleteDirectoryWIP() : void
+    {
+
+    }
+
     /**
      * @param string $path
      * @return File
      */
-    public function getFile(string $path) : File
+    public function readFile(string $path) : File
     {
         $path = new Path($this->server, $path);
         $request = new GetFileContentRequest($this->server, $path);
         $response = $request->perform();
         return $response->parse();
+    }
+
+    public function createFileWIP() : void
+    {
+
+    }
+
+    public function deleteFileWIP() : void
+    {
+
+    }
+
+    public function moveItemWIP() : void
+    {
+
+    }
+
+    public function renameItemWIP() : void
+    {
+
     }
 }
