@@ -3,6 +3,7 @@
 namespace iit\Nextcloud\DAV\Filesystem\Query;
 
 use http\Exception\InvalidArgumentException;
+use iit\Nextcloud\DAV\Exception\InvalidDavResponseException;
 
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
@@ -31,6 +32,17 @@ abstract class QueryResponse
     {
         return new InvalidArgumentException(
             "invalid dav response given: ".print_r($davResponse, true)
+        );
+    }
+
+    /**
+     * @param array $davResponse
+     * @return InvalidDavResponseException
+     */
+    protected function invalidDavResponseException(array $davResponse) : InvalidDavResponseException
+    {
+        return new InvalidDavResponseException(
+            "invalid dav response! status code: {$davResponse['statusCode']}"
         );
     }
 

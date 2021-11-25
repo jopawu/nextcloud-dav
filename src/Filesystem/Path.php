@@ -69,7 +69,7 @@ class Path
 
         if( strlen($this->path) )
         {
-            return $absoluteFilesystemBaseFqdn . '/' . $this->path;
+            return $absoluteFilesystemBaseFqdn . '/' . $this->encodeRessourcePath($this->path);
         }
 
         return $absoluteFilesystemBaseFqdn;

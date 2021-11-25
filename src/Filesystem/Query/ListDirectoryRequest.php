@@ -12,11 +12,6 @@ use iit\Nextcloud\DAV\Helpers\DavProperties;
 class ListDirectoryRequest extends QueryRequest
 {
     /**
-     * @var Server
-     */
-    protected $server;
-
-    /**
      * @var Path
      */
     protected $path;
@@ -33,7 +28,7 @@ class ListDirectoryRequest extends QueryRequest
      */
     public function __construct(Server $server, Path $path, int $depth = null)
     {
-        $this->server = $server;
+        parent::__construct($server);
         $this->path = $path;
         $this->depth = $depth;
     }

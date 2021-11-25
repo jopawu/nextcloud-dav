@@ -12,19 +12,6 @@ use iit\Nextcloud\DAV\Helpers\DavProperties;
 class QuotaReportRequest extends QueryRequest
 {
     /**
-     * @var Server
-     */
-    protected $server;
-
-    /**
-     * @param Server $server
-     */
-    public function __construct(Server $server)
-    {
-        $this->server = $server;
-    }
-
-    /**
      * @return QueryResponse
      */
     public function perform() : QueryResponse

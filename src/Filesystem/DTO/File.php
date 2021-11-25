@@ -2,6 +2,8 @@
 
 namespace iit\Nextcloud\DAV\Filesystem\DTO;
 
+use iit\Nextcloud\DAV\Exception\ContentNotInitialisedException;
+
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
  */
@@ -18,6 +20,11 @@ class File extends Item
     protected $size;
 
     /**
+     * @var string
+     */
+    protected $content;
+
+    /**
      * @param string $identifier
      * @param string $name
      * @param int $lastModified
@@ -29,6 +36,7 @@ class File extends Item
         parent::__construct($identifier, $name, $lastModified);
         $this->mimeType = $mimeType;
         $this->size = $size;
+        $this->content = null;
     }
 
     /**
@@ -45,6 +53,30 @@ class File extends Item
     public function getSize() : int
     {
         return $this->size;
+    }
+
+    /**
+     * @param string $content
+     * @return File
+     */
+    public function withContent(string $content) : File
+    {
+        $clone = clone $this;
+        $clone->content = $content;
+        return $clone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent() : string
+    {
+        if( $this->content === null )
+        {
+            throw new ContentNotInitialisedException("content not initialised for file: {$this->name}");
+        }
+
+        return $this->content;
     }
 
     /**

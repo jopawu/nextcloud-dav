@@ -9,6 +9,8 @@ use iit\Nextcloud\DAV\Filesystem\Query\ListDirectoryRequest;
 use iit\Nextcloud\DAV\Filesystem\Query\QuotaReportRequest;
 use iit\Nextcloud\DAV\Filesystem\DTO\Directory;
 use iit\Nextcloud\DAV\Filesystem\DTO\Quota;
+use iit\Nextcloud\DAV\Filesystem\DTO\File;
+use iit\Nextcloud\DAV\Filesystem\Query\GetFileContentRequest;
 
 /**
  * @author      Björn Heyser <info@bjoernheyser.de>
@@ -31,7 +33,7 @@ class Client
     /**
      * @return mixed
      */
-    public function options()
+    protected function options()
     {
         $davClient = $this->server->getDavClient();
         return $davClient->options();
@@ -40,7 +42,7 @@ class Client
     /**
      * @return mixed
      */
-    public function get()
+    protected function get()
     {
         $davClient = $this->server->getDavClient();
         return $davClient->request('GET');
@@ -65,6 +67,18 @@ class Client
     {
         $path = new Path($this->server, $path);
         $request = new ListDirectoryRequest($this->server, $path, $depth);
+        $response = $request->perform();
+        return $response->parse();
+    }
+
+    /**
+     * @param string $path
+     * @return File
+     */
+    public function getFile(string $path) : File
+    {
+        $path = new Path($this->server, $path);
+        $request = new GetFileContentRequest($this->server, $path);
         $response = $request->perform();
         return $response->parse();
     }
