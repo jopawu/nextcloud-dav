@@ -27,6 +27,54 @@ class Directory extends Item implements Iterator
     }
 
     /**
+     * @param Item $child
+     */
+    public function addChild(Item $child)
+    {
+        $this->children[] = $child;
+    }
+
+    /**
+     * @return Directory[]
+     */
+    public function getDirectories() : array
+    {
+        $directories = [];
+
+        foreach($this as $item)
+        {
+            if( !$item->isDirectory() )
+            {
+                continue;
+            }
+
+            $directories[] = $item;
+        }
+
+        return $directories;
+    }
+
+    /**
+     * @return File[]
+     */
+    public function getFiles() : array
+    {
+        $files = [];
+
+        foreach($this as $item)
+        {
+            if( !$item->isFile() )
+            {
+                continue;
+            }
+
+            $files[] = $item;
+        }
+
+        return $files;
+    }
+
+    /**
      * @return bool
      */
     public function isDirectory() : bool
@@ -40,14 +88,6 @@ class Directory extends Item implements Iterator
     public function isFile() : bool
     {
         return false;
-    }
-
-    /**
-     * @param Item $child
-     */
-    public function addChild(Item $child)
-    {
-        $this->children[] = $child;
     }
 
     /**

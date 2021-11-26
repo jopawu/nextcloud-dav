@@ -14,6 +14,8 @@ use iit\Nextcloud\DAV\Filesystem\DTO\File;
  */
 class ListDirectoryResponse extends QueryResponse
 {
+    const EMPTY_DIR_CACHE_INDEX_REPLACEMENT = '/';
+
     /**
      * @var Server
      */
@@ -75,10 +77,12 @@ class ListDirectoryResponse extends QueryResponse
 
                 if( !$this->isRootDirectory($relIndex) )
                 {
-                    $directories[dirname($relIndex)]->addChild($directory);
+                    $dirCacheIndex = $this->buildDirCacheIndex($relIndex, true);
+                    $directories[$dirCacheIndex]->addChild($directory);
                 }
 
-                $directories[$relIndex] = $directory;
+                $dirCacheIndex = $this->buildDirCacheIndex($relIndex, false);
+                $directories[$dirCacheIndex] = $directory;
                 continue;
             }
 
@@ -86,7 +90,8 @@ class ListDirectoryResponse extends QueryResponse
             $filesize = $item[DavProperties::PROP_CONTENTSIZE];
             $file = new File($identifier, $name, $lastmodified, $mimetype, $filesize);
 
-            $directories[dirname($relIndex)]->addChild($file);
+            $dirCacheIndex = $this->buildDirCacheIndex($relIndex, true);
+            $directories[$dirCacheIndex]->addChild($file);
         }
 
         return current($directories);
@@ -107,11 +112,38 @@ class ListDirectoryResponse extends QueryResponse
     }
 
     /**
-     * @param string $index
+     * @param string $itemIndex
      * @return bool
      */
-    protected function isRootDirectory(string $index) : bool
+    protected function isRootDirectory(string $itemIndex) : bool
     {
-        return $index == '/'.$this->path->getPath();
+        $itemIndex = urldecode($this->fixEmptyIndex($itemIndex));
+        $rootIndex = '/'.$this->path->getPath();
+
+        return $itemIndex == $rootIndex;
+    }
+
+    /**
+     * @param string $itemIndex
+     * @param bool $needParent
+     * @return string
+     */
+    protected function buildDirCacheIndex(string $itemIndex, bool $needParent) : string
+    {
+        if( $needParent )
+        {
+            $itemIndex = dirname($itemIndex);
+        }
+
+        return $this->fixEmptyIndex($itemIndex);
+    }
+
+    /**
+     * @param string $itemIndex
+     * @return string
+     */
+    protected function fixEmptyIndex(string $itemIndex) : string
+    {
+        return strlen($itemIndex) ? $itemIndex : self::EMPTY_DIR_CACHE_INDEX_REPLACEMENT;
     }
 }

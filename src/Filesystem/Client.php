@@ -4,7 +4,7 @@
 
 namespace iit\Nextcloud\DAV\Filesystem;
 
-use iit\Nextcloud\DAV\Server as NcServer;
+use iit\Nextcloud\DAV\Server;
 use iit\Nextcloud\DAV\Filesystem\Query\ListDirectoryRequest;
 use iit\Nextcloud\DAV\Filesystem\Query\QuotaReportRequest;
 use iit\Nextcloud\DAV\Filesystem\DTO\Directory;
@@ -18,14 +18,14 @@ use iit\Nextcloud\DAV\Filesystem\Query\GetFileContentRequest;
 class Client
 {
     /**
-     * @var NcServer
+     * @var Server
      */
     protected $server;
 
     /**
-     * @param NcServer $server
+     * @param Server $server
      */
-    public function __construct(NcServer $server)
+    public function __construct(Server $server)
     {
         $this->server = $server;
     }
