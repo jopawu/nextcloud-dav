@@ -44,7 +44,19 @@ class GetFileContentResponse extends QueryResponse
         $contentDisposition = current($headers['content-disposition']);
         $dispoParts = explode(';', $contentDisposition);
 
-        return 'name';
+        foreach($dispoParts as $part)
+        {
+            $matches = null;
+
+            if( !preg_match('/^filename="(.*)"$/', trim($part), $matches) )
+            {
+                continue;
+            }
+
+            return $matches[1];
+        }
+
+        return 'filename';
     }
 
     /**

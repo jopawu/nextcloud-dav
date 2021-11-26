@@ -53,7 +53,7 @@ class Directory extends Item implements Iterator
     /**
      * @return Item
      */
-    public function current() : Item
+    public function current()
     {
         return current($this->children);
     }
@@ -61,7 +61,7 @@ class Directory extends Item implements Iterator
     /**
      * @return Item
      */
-    public function next() : Item
+    public function next()
     {
         return next($this->children);
     }
@@ -69,7 +69,7 @@ class Directory extends Item implements Iterator
     /**
      * @return int
      */
-    public function key() : int
+    public function key()
     {
         return key($this->children);
     }
@@ -77,7 +77,7 @@ class Directory extends Item implements Iterator
     /**
      * @return bool
      */
-    public function valid() : bool
+    public function valid()
     {
         return key($this->children) !== null;
     }
@@ -85,7 +85,7 @@ class Directory extends Item implements Iterator
     /**
      * @return Item
      */
-    public function rewind() : Item
+    public function rewind()
     {
         return reset($this->children);
     }
