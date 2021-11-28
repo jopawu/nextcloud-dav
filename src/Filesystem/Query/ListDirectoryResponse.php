@@ -48,7 +48,8 @@ class ListDirectoryResponse extends QueryResponse
      */
     protected function validateDavResponse(array $davResponse) : void
     {
-        $rootIndex = array_shift(array_keys($davResponse));
+        $davResponseKeys = array_keys($davResponse);
+        $rootIndex = array_shift($davResponseKeys);
         $rootItem = array_shift($davResponse);
         $rootIndex = $this->path->fetchRelativeDavRessourcePath($rootIndex);
 
