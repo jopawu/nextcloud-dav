@@ -79,13 +79,22 @@ class Path
      * @param string $absoluteDavFilesystemPath
      * @return string
      */
-    public function fetchRelativeDavRessourcePath(string $absoluteDavRessourcePath) : string
+    public function fetchRelativeDavRessourceFilePath(string $absoluteDavRessourcePath) : string
     {
         $absoluteFilesystemBaseFqdn = $this->buildAbsoluteFilesystemBaseFqdn();
         $relativeDavFilesystemBasePath = $this->fetchUrlsRelativeRessourcePath($absoluteFilesystemBaseFqdn);
         $relativeDavFilesystemPath = str_replace($relativeDavFilesystemBasePath, '', $absoluteDavRessourcePath);
         $relativeDavFilesystemPath = $this->trimTrailingSlashes($relativeDavFilesystemPath);
         return $relativeDavFilesystemPath;
+    }
+
+    /**
+     * @param string $absoluteDavFilesystemPath
+     * @return string
+     */
+    public function fetchRelativeDavRessourceDirectoryPath(string $absoluteDavRessourcePath) : string
+    {
+        return dirname($this->fetchRelativeDavRessourceFilePath($absoluteDavRessourcePath));
     }
 
     /**

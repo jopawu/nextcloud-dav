@@ -18,6 +18,11 @@ abstract class Item
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $path;
+
+    /**
      * @var int
      */
     protected $lastModified;
@@ -27,10 +32,11 @@ abstract class Item
      * @param string $name
      * @param int $lastModified
      */
-    public function __construct(string $identifier, string $name, int $lastModified)
+    public function __construct(string $identifier, string $name, string $path, int $lastModified)
     {
         $this->identifier = $identifier;
         $this->name = $name;
+        $this->path = $path;
         $this->lastModified = $lastModified;
     }
 

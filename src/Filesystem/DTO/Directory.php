@@ -20,10 +20,10 @@ class Directory extends Item implements Iterator
      * @param string $name
      * @param int $lastModified
      */
-    public function __construct(string $identifier, string $name, int $lastModified)
+    public function __construct(string $identifier, string $name, string $path, int $lastModified)
     {
         $this->children = [];
-        parent::__construct($identifier, $name, $lastModified);
+        parent::__construct($identifier, $name, $path, $lastModified);
     }
 
     /**

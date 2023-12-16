@@ -51,7 +51,7 @@ class ListDirectoryResponse extends QueryResponse
         $davResponseKeys = array_keys($davResponse);
         $rootIndex = array_shift($davResponseKeys);
         $rootItem = array_shift($davResponse);
-        $rootIndex = $this->path->fetchRelativeDavRessourcePath($rootIndex);
+        $rootIndex = $this->path->fetchRelativeDavRessourceFilePath($rootIndex);
 
         // todo: validate response
     }
@@ -66,7 +66,8 @@ class ListDirectoryResponse extends QueryResponse
 
         foreach($this->davResponse as $davIndex => $item)
         {
-            $relIndex = $this->path->fetchRelativeDavRessourcePath($davIndex);
+            $relIndex = $this->path->fetchRelativeDavRessourceFilePath($davIndex);
+            $path = $this->path->fetchRelativeDavRessourceDirectoryPath($davIndex);
 
             $name = urldecode(basename($relIndex));
             $identifier = $item[DavProperties::PROP_IDENTIFIER];
@@ -74,7 +75,7 @@ class ListDirectoryResponse extends QueryResponse
 
             if( $this->isDirectory($item) )
             {
-                $directory = new Directory($identifier, $name, $lastmodified);
+                $directory = new Directory($identifier, $name, $path, $lastmodified);
 
                 if( !$this->isRootDirectory($relIndex) )
                 {
@@ -89,7 +90,7 @@ class ListDirectoryResponse extends QueryResponse
 
             $mimetype = $item[DavProperties::PROP_CONTENTTYPE];
             $filesize = $item[DavProperties::PROP_CONTENTSIZE];
-            $file = new File($identifier, $name, $lastmodified, $mimetype, $filesize);
+            $file = new File($identifier, $name, $path, $lastmodified, $mimetype, $filesize);
 
             $dirCacheIndex = $this->buildDirCacheIndex($relIndex, true);
             $directories[$dirCacheIndex]->addChild($file);

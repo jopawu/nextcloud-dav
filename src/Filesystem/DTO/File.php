@@ -31,9 +31,9 @@ class File extends Item
      * @param string $mimeType
      * @param int $size
      */
-    public function __construct(string $identifier, string $name, int $lastModified, string $mimeType, int $size)
+    public function __construct(string $identifier, string $name, string $path, int $lastModified, string $mimeType, int $size)
     {
-        parent::__construct($identifier, $name, $lastModified);
+        parent::__construct($identifier, $name, $path, $lastModified);
         $this->mimeType = $mimeType;
         $this->size = $size;
         $this->content = null;
