@@ -34,7 +34,7 @@ abstract class Item
      */
     public function __construct(string $identifier, string $name, string $path, int $lastModified)
     {
-        $this->identifier = $identifier;
+        $this->identifier = trim($identifier, '"');
         $this->name = $name;
         $this->path = $path;
         $this->lastModified = $lastModified;
@@ -54,6 +54,14 @@ abstract class Item
     public function getName() : string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
     }
 
     /**
